@@ -2,7 +2,7 @@
 Interactive design for CSC 173 with Dr Baynes
 
 # Requirements
-- [ ] Preprocessing
+- [x] Preprocessing
   - Read the businesses.json file, parse it for all the businesses in Santa Barbara then output to a new JSON file.
  
 - [ ] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
