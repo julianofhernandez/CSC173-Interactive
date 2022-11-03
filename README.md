@@ -2,8 +2,8 @@
 Interactive design for CSC 173 with Dr Baynes
 
 # Requirements
-- [x] Preprocessing
-  - Read the businesses.json file, parse it for all the businesses in Santa Barbara then output to a new JSON file.
+- [x] Preprocessing DONE
+  - Read the businesses.json file, parse it for all the businesses in Santa Barbara then output to a new JSON file. yelp_filtered_to_santa_barbara.json is (3840/150346) = 0.03% of the lines that were in yelp_academic_dataset_business.json
  
 - [ ] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
   - [ ] Filter by business type (category)
