@@ -4,69 +4,85 @@
 <meta charset="utf-8">
 <title>My map</title>
 <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
-<link rel="stylesheet" type="text/css" href="map.css">
 <style></style>
 </head>
 <body>
     <div id="container" class="svg-container"></div>
-    <!--Sample JSON
-    {"business_id": "HdWXWU6CZueBZsf1oKNBcQ", 
-    "name": "The Adult Store", 
-    "address": "405 State St", 
-    "city": "Santa Barbara", 
-    "state": "CA", 
-    "postal_code": "93101", 
-    "latitude": 34.4158720755, 
-    "longitude": -119.6945152398, 
-    "stars": 4.0, 
-    "review_count": 32, 
-    "is_open": 1, 
-    "attributes": {
-                  "RestaurantsGoodForGroups": "False", 
-                  "OutdoorSeating": "False", 
-                  "NoiseLevel": "u'very_loud'", 
-                  "Ambience": "{'romantic': False, 
-                                'intimate': False, 
-                                'classy': False, 
-                                'hipster': False, 
-                                'divey': False, 
-                                'touristy': False, 
-                                'trendy': False, 
-                                'upscale': False, 
-                                'casual': False}", 
-                  "HasTV": "True", 
-                  "Alcohol": "u'none'", 
-                  "WheelchairAccessible": "True", 
-                  "RestaurantsPriceRange2": "2", 
-                  "BusinessAcceptsCreditCards": "True", 
-                  "BikeParking": "True", 
-                  "DogsAllowed": "True", 
-                  "BusinessParking": "{'garage': False, 'street': True, 'validated': False, 'lot': False, 'valet': False}", "ByAppointmentOnly": "False"}, 
-                  "categories": "Bookstores, Books, Mags, Music & Video, Party Supplies, Event Planning & Services, Adult, Arcades, Fashion, Adult Entertainment, Nightlife, Arts & Entertainment, Personal Shopping, Shopping, Lingerie, Education, Active Life, Adult Education", 
-                  "hours": {"Monday": "0:0-0:0", "Tuesday": "10:0-22:0", "Wednesday": "10:0-22:0", "Thursday": "10:0-22:0", "Friday": "10:0-22:0", "Saturday": "10:0-22:0", "Sunday": "10:0-22:0"}}
-
-    -->
     <script type="text/javascript">
-    var margin = {top: 20, right: 10, bottom: 40, left: 100},
-      width = 600 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      width = 800,
+      height = 1000;
 
-    var svg = d3.select("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+      var svg = d3
+        .select(".svg-container")
+        .append("svg")
+        // set to the same size as the "map-holder" div
+        .attr("width", width)
+        .attr("height", height)
+;
 
-    var projection = d3.geoMercator()
-      .scale(70)
-      .center([0,20])
-      .translate([width / 2 - margin.left, height / 2]);
-      
-    var path = d3.geoPath().projection(projection);
+  var projection = d3
+   .geoEquirectangular()
+   .center([-119.5, 34.4]) // set centre to further North
+   .scale(50000) // scale to fit group width
+   .translate([width/2,height/2]) // ensure centred in group
+;
+
+
+var path = d3
+   .geoPath()
+   .projection(projection)
+;
+
+var countriesGroup = svg
+   .append("g")
+   .attr("id", "map")
+;
+countriesGroup
+   .append("rect")
+   .attr("x", 0)
+   .attr("y", 0)
+   .style('fill', 'white')
+   .attr("width", width)
+   .attr("height", height)
+;
+
+
+  var data = d3.json("yelp_filtered_to_santa_barbara.json").then( function(data){
+    console.log(data[0].stars);
+    countriesGroup.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .style('fill', 'orange')
+                .attr("x", function(data) {
+                    console.log(data.longitude)
+                    return data.longitude;})
+                .attr("y", function(data) {
+                    console.log(data.latitude)
+                    return data.latitude;})
+                .attr('r', function(data) {
+                  console.log(data.stars)
+                  return data.stars;})
+                  .attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";});
+      }).catch(function(){ console.log("error")});
+
+    // working print all stuff
+    // var data = d3.json("yelp_filtered_to_santa_barbara.json").then( function(data){
+    //     d3.select("body")
+    //             .selectAll("span")
+    //             .data(data)
+    //             .enter()
+    //             .append("span")
+    //             .text(function(d) { 
+    //               // console.log(d);
+    //               return d.name + "\n "; })
+    //             })
+    // .catch(function(){ console.log("error")});
+
+    // var data = [4, 1, 6, 2, 8, 9];
+    // var path = d3.geoPath().projection(projection);
 
   // load data  
-var worldmap = d3.json("yelp_filtered_to_santa_barbara.json");
 
 </script>
 </body>
