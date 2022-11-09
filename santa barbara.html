@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My map</title>
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<style></style>
+</head>
+<body>
+    <div id="container" class="svg-container"></div>
+    <script type="text/javascript">
+// Dimensions of the map (SVG)
+width = 800,
+height = 1000;
+
+var svg = d3
+  .select(".svg-container")
+  .append("svg")
+  // set to the same size as the "map-holder" div
+  .attr("width", width)
+  .attr("height", height)
+;
+
+// Used to convert lat,long to x,y
+var projection = d3
+  .geoEquirectangular()
+  .center([-119.7, 34.5]) // set centre to further North
+  .scale(100000) // scale to fit group width
+  .translate([width/2,height/2]) // ensure centred in group
+;
+
+var businessesGroup = svg
+   .append("g")
+   .attr("id", "map")
+;
+businessesGroup
+   .append("rect")
+   .attr("x", 0)
+   .attr("y", 0)
+   .style('fill', 'white')
+   .attr("width", width)
+   .attr("height", height)
+;
+
+
+// // Leaflet base map
+// var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+//     .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+
+
+
+  // Because loads are async we will need to put all of our code that uses data within this block
+  var data = d3.json("yelp_filtered_to_santa_barbara.json").then( function(data){
+    console.log(data[0].stars);
+    businessesGroup.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .style('fill', 'orange') // Task 1: Make it use a sliding scale for average stars
+                .attr('r', function(data) {
+                  console.log(data.stars)
+                  return data.stars;}) // Task 2: Make radius based on review count
+                  .attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";});
+      }).catch(function(){ console.log("error")});
+
+</script>
+
+</body>
+</html>
