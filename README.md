@@ -1,7 +1,10 @@
 # CSC173 - Interactive Design
 Interactive design for CSC 173 with Dr Baynes
 
+test-map.html will be our final submission, the other html files are for reference.
+
 Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.html
+
 
 # Requirements
 - [x] Preprocessing script @julian
