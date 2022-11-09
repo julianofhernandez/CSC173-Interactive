@@ -1,5 +1,7 @@
-# CSC173-Interactive
+# CSC173 - Interactive Design
 Interactive design for CSC 173 with Dr Baynes
+
+Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.html
 
 # Requirements
 - [x] Preprocessing script @julian
