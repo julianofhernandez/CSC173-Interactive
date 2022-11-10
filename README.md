@@ -9,7 +9,7 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
 # Requirements
 - [x] Preprocessing script @julian
   - Read the businesses.json file, parse it for all the businesses in Santa Barbara then output to a new JSON file. yelp_filtered_to_santa_barbara.json is (3840/150346) = 0.03% of the lines that were in yelp_academic_dataset_business.json. If you need the input file parsed better or changed let me know or if you are comfortable with python feel free to update ./yelpDatasetParser.py
-- [ ] Currently locations are plotted using a static list, we need to load the data from yelp_filtered_to_santa_barbara.json so that everyone else can start their tasks. @Kenta
+- [x] Currently locations are plotted using a static list, we need to load the data from yelp_filtered_to_santa_barbara.json so that everyone else can start their tasks. @Kenta
 
 - [ ] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
   - [ ] Slider: Filter by stars (give the user a slider between 0 and 5 for stars) @Abdallah
