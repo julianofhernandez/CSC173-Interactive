@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 
 <!-- Load d3.js and the geo projection plugin -->
-<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3.v5.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
 <!-- Load Leaflet -->
@@ -18,6 +18,8 @@
 <body>
    
 <script>
+
+
 // mapid is the id of the div where the map will appear
 var map = L
   .map('mapid')
@@ -33,31 +35,34 @@ L.tileLayer(
 // Add a svg layer to the map
 L.svg().addTo(map);
 
-// Create data for circles:
-var markers = [
-  {long: -119.7, lat:34.5}, // corsica
-  {long: 9.083, lat: 42.149}, // corsica
-  {long: 7.26, lat: 43.71}, // nice
-  {long: 2.349, lat: 48.864}, // Paris
-  {long: -1.397, lat: 43.664}, // Hossegor
-  {long: 3.075, lat: 50.640}, // Lille
-  {long: -3.83, lat: 48}, // Morlaix
-];
 
-// Select the svg area and add circles:
-d3.select("#mapid")
-  .select("svg")
-  .selectAll("myCircles")
-  .data(markers)
-  .enter()
-  .append("circle")
-    .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
-    .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
-    .attr("r", 14)
-    .style("fill", "red")
-    .attr("stroke", "red")
-    .attr("stroke-width", 3)
-    .attr("fill-opacity", .4)
+
+
+var data = d3.json("yelp_filtered_to_santa_barbara.json").then(function(data){
+  
+  //initialize the marker
+  var markers = [];
+  //iterate through the entire json file and append the long and lat with appropriate format
+  for(let i = 0; i < data.length; i++){
+    markers.push({long: data[i].longitude, lat: data[i].latitude})
+  }
+
+  // Select the svg area and add circles:
+  d3.select("#mapid")
+    .select("svg")
+    .selectAll("myCircles")
+    .data(markers)
+    .enter()
+    .append("circle")
+      .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
+      .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
+      .attr("r", 14)
+      .style("fill", "red")
+      .attr("stroke", "red")
+      .attr("stroke-width", 3)
+      .attr("fill-opacity", .4)
+}).catch(function(){ console.log("error")});
+
 
 // Function that update circle position if something change
 function update() {
