@@ -60,7 +60,7 @@ var data = d3.json("yelp_filtered_to_santa_barbara.json").then(function(data){
     .append("circle")
       .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
       .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
-      .attr("r", function(d){return d.review_count/50}) //Reviwe_count cannot scale correctly with circle size. 1. logrithmetic scale (linear spacing ish approach) 2. just divide and get the extreme
+      .attr("r", function(d){return Math.sqrt(d.review_count/Math.PI)*2}) //Reviwe_count cannot scale correctly with circle size. 1. logrithmetic scale (linear spacing ish approach) 2. just divide and get the extreme
       //.attr("r", function(d){return Math.log(d.review_count)*5})
       .style("fill", "red")
       .attr("stroke", "red")
