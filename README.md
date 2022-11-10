@@ -18,7 +18,7 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
   - [x] Zoom: Add zooming functionality @Julian
   
 - [ ] Your chart must have at least 3 attributes. Attributes: 
-  - [ ] Size will be number of reviews @Kenta
+  - [x] Size will be number of reviews @Kenta
   - [ ] Color will be average rating @Sam
   - [x] Latitude and longitude for x and y and basemap coordinates @Julian
 
