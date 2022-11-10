@@ -44,7 +44,11 @@ var data = d3.json("yelp_filtered_to_santa_barbara.json").then(function(data){
   var markers = [];
   //iterate through the entire json file and append the long and lat with appropriate format
   for(let i = 0; i < data.length; i++){
-    markers.push({long: data[i].longitude, lat: data[i].latitude})
+    markers.push({
+      long: data[i].longitude,
+      lat: data[i].latitude,
+      review_count: data[i].review_count 
+    })
   }
 
   // Select the svg area and add circles:
@@ -56,7 +60,8 @@ var data = d3.json("yelp_filtered_to_santa_barbara.json").then(function(data){
     .append("circle")
       .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
       .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
-      .attr("r", 14)
+      .attr("r", function(d){return d.review_count/50}) //Reviwe_count cannot scale correctly with circle size. 1. logrithmetic scale (linear spacing ish approach) 2. just divide and get the extreme
+      //.attr("r", function(d){return Math.log(d.review_count)*5})
       .style("fill", "red")
       .attr("stroke", "red")
       .attr("stroke-width", 3)
