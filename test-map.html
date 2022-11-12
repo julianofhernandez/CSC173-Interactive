@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- Load d3.js and the geo projection plugin -->
-<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
 <!-- Load Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
 
+
+<div class="search-container">
+    <input type="text" placeholder="Search" name="search" id="locationName">
+    <button ><i class="fa fa-search"></i></button>
+</div>
 <!-- Create an element where the map will take place -->
-<div id="mapid"></div>
+<div id="mapid">
+</div>
 
 <style>
 #mapid { height: 800px; width: 800px }
@@ -18,12 +25,18 @@
 <body>
    
 <script>
-
-
 // mapid is the id of the div where the map will appear
 var map = L
   .map('mapid')
   .setView([34.45,-119.7], 12);   // center position + zoom
+
+//add the variable which will store the data for dots
+var locations
+
+//add the variable which will store the data
+var dataset
+
+
 
 // Add a tile to the map = a background. Comes from OpenStreetmap
 L.tileLayer(
@@ -36,48 +49,66 @@ L.tileLayer(
 L.svg().addTo(map);
 
 
+d3.json("yelp_filtered_to_santa_barbara.json", function(error, yelpData) {
+  if (error) throw error; 
+  console.log(yelpData)
+  dataset = yelpData
 
+  var myColor = d3.scaleLinear().domain([1,5])
+  .range(['blue','orange','green'])
 
-var data = d3.json("yelp_filtered_to_santa_barbara.json").then(function(data){
-  
-  //initialize the marker
-  var markers = [];
-  //iterate through the entire json file and append the long and lat with appropriate format
-  for(let i = 0; i < data.length; i++){
-    markers.push({
-      long: data[i].longitude,
-      lat: data[i].latitude,
-      review_count: data[i].review_count 
-    })
-  }
+  console.log(d3.min(yelpData, function(d){return d.stars}))
 
   // Select the svg area and add circles:
-  d3.select("#mapid")
-    .select("svg")
-    .selectAll("myCircles")
-    .data(markers)
-    .enter()
-    .append("circle")
-      .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
-      .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
-      .attr("r", function(d){return Math.sqrt(d.review_count/Math.PI)*2}) //Reviwe_count cannot scale correctly with circle size. 1. logrithmetic scale (linear spacing ish approach) 2. just divide and get the extreme
-      //.attr("r", function(d){return Math.log(d.review_count)*5})
-      .style("fill", "red")
-      .attr("stroke", "red")
-      .attr("stroke-width", 3)
-      .attr("fill-opacity", .4)
-}).catch(function(){ console.log("error")});
+  locations =   d3.select("#mapid")
+                  .select("svg")
+                  .selectAll("myCircles")
+                  .data(yelpData)
+                  .enter()
+                  .append("circle")
+                    .attr("cx", function(d){ return map.latLngToLayerPoint([d.latitude, d.longitude]).x })
+                    .attr("cy", function(d){ return map.latLngToLayerPoint([d.latitude, d.longitude]).y })
+                    .attr("r", function(d){return Math.sqrt(d.review_count/Math.PI)*2})
+                    .style("fill", d=> myColor(d.stars))
+                    .attr("stroke", d=> myColor(d.stars))
+                    .attr("stroke-width", 3)
+                    .attr("fill-opacity", .4)
+ 
 
+    // locations.filter(d=> d.name == 'H&M').attr("r", 20).style("fill",'black')
+    console.log(locations.data())
+    //stars
+    
+})
 
 // Function that update circle position if something change
 function update() {
   d3.selectAll("circle")
-    .attr("cx", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).x })
-    .attr("cy", function(d){ return map.latLngToLayerPoint([d.lat, d.long]).y })
+        .attr("cx", function(d){ return map.latLngToLayerPoint([d.latitude, d.longitude]).x })
+        .attr("cy", function(d){ return map.latLngToLayerPoint([d.latitude, d.longitude]).y })
 }
 
 // If the user change the map (zoom or drag), I update circle position:
 map.on("moveend", update)
+
+//add event listener for name search
+
+d3.select("button").on("click", function() {
+
+      locations.attr("stroke-width", 3).attr("fill-opacity", .4)
+
+      var txtName = d3.select("#locationName").node().value;
+      if(txtName.length !=0){
+        if(dataset.filter(d=> d.name.toLowerCase() == txtName.toLowerCase()).length !=0)
+        {
+          locations.filter(d=> d.name.toLowerCase() != txtName.toLowerCase()).attr("stroke-width", 0).attr("fill-opacity", 0)
+        }
+        else{
+          locations.attr("stroke-width", 0).attr("fill-opacity", 0)
+        }
+      }
+      
+    })
 
 </script>
 </body>
