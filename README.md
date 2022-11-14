@@ -11,18 +11,18 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
   - Read the businesses.json file, parse it for all the businesses in Santa Barbara then output to a new JSON file. yelp_filtered_to_santa_barbara.json is (3840/150346) = 0.03% of the lines that were in yelp_academic_dataset_business.json. If you need the input file parsed better or changed let me know or if you are comfortable with python feel free to update ./yelpDatasetParser.py
 - [x] Currently locations are plotted using a static list, we need to load the data from yelp_filtered_to_santa_barbara.json so that everyone else can start their tasks. @Kenta
 
-- [ ] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
+- [x] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
   - [x] Slider: Filter by stars (give the user a slider between 0 and 5 for stars) @Abdallah
   - [x] Slider: Filter by total reviews (give the user a slider between 0 and the most reviewed restaurant) @Abdallah
-  - [ ] Search: Add a text input box that is used to filter by name (for example let me compare all "Starbucks" locations) @Sam
+  - [x] Search: Add a text input box that is used to filter by name (for example let me compare all "Starbucks" locations) @Sam
   - [x] Zoom: Add zooming functionality @Julian
   
-- [ ] Your chart must have at least 3 attributes. Attributes: 
+- [x] Your chart must have at least 3 attributes. Attributes: 
   - [x] Size will be number of reviews @Kenta
-  - [ ] Color will be average rating @Sam
+  - [x] Color will be average rating @Sam
   - [x] Latitude and longitude for x and y and basemap coordinates @Julian
 
- - [ ] Write up @Julian
+ - [x] Write up @Julian
   - A rationale for your design decisions. How did you choose your particular visual encodings and interaction techniques? What alternatives did you consider and how did you arrive at your ultimate choices?
   
   **For our interactive design we wanted to start off by replicating the interactive map that we had created in Tableau, but with new features so that it actually was useful. Becuase of our past experience with this dataset and how unclean it is, we started off with writing a custom Python script that read  the businesses.json file, parsed it for all the businesses in Santa Barbara then output to a new JSON file. yelp_filtered_to_santa_barbara.json is (3840/150346) = 0.03% of the lines that were in yelp_academic_dataset_business.json. After this we chose attributes, we needed to include latitude/longitude for it to be a map, then chose number of reviews and average rating as the two key factors that people would look for. For our interactive techniques we wanted sliders to control the review count and average stars. Most importantly, we wanted to include a search feature so that specific businesses could be compared by differenet locations.**
