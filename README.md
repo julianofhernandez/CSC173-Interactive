@@ -31,8 +31,6 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
   
 __Because we needed to coordinate with 4 people, Julian took on the role of setup and laying out the next steps for everyone to work on. Together we identified what we wanted the final concept to look like, then Julian preprocessed the data, setup the tile layer with coordinates, and implemented the interactive zoom over about 7 hours. Next Kenta took over and replaced the dummy dataset with the processed JSON and linked the size to the number of reviews, this took him _ hours of work. We ran into difficultly here because adding 1 to the radius of the circles increased the area by a lot more, together we decided to use radius=sqrt(review_count/pi)*2, this adds 2 to the total area for each review. Next, Sam worked for _ hours to add the last remaining attribute, color for average rating, and the search bar. Lastly, Abdallah completed the visualization by adding two sliders: one for color and one for size. We wanted these sliders to have two locations so that we could sort by restaurants that fall between these two values. Unfortunetly, we ran into complications with D3 and Abdallah had already spent 10+ hours working hard so we decided to leave out this feature.__
 
-Julian 6h for setting up base layer and coordinate translation.
-
 
 # Setup
 
