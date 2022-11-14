@@ -12,8 +12,8 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
 - [x] Currently locations are plotted using a static list, we need to load the data from yelp_filtered_to_santa_barbara.json so that everyone else can start their tasks. @Kenta
 
 - [ ] 4 interactives ( include panning, zooming, brushing, details-on-demand (e.g., tooltips), dynamic query filters, and selecting different measures to display.)
-  - [ ] Slider: Filter by stars (give the user a slider between 0 and 5 for stars) @Abdallah
-  - [ ] Slider: Filter by total reviews (give the user a slider between 0 and the most reviewed restaurant) @Abdallah
+  - [x] Slider: Filter by stars (give the user a slider between 0 and 5 for stars) @Abdallah
+  - [x] Slider: Filter by total reviews (give the user a slider between 0 and the most reviewed restaurant) @Abdallah
   - [ ] Search: Add a text input box that is used to filter by name (for example let me compare all "Starbucks" locations) @Sam
   - [x] Zoom: Add zooming functionality @Julian
   
