@@ -25,9 +25,11 @@ Hosted page: https://julianofhernandez.github.io/CSC173-Interactive/test-map.htm
  - [ ] Write up @Julian
   - A rationale for your design decisions. How did you choose your particular visual encodings and interaction techniques? What alternatives did you consider and how did you arrive at your ultimate choices?
   
-  
+  **For our interactive design we wanted to start off by replicating the interactive map that we had created in Tableau, but with new features so that it actually was useful. Becuase of our past experience with this dataset and how unclean it is, we started off with writing a custom Python script that read  the businesses.json file, parsed it for all the businesses in Santa Barbara then output to a new JSON file. yelp_filtered_to_santa_barbara.json is (3840/150346) = 0.03% of the lines that were in yelp_academic_dataset_business.json. After this we chose attributes, we needed to include latitude/longitude for it to be a map, then chose number of reviews and average rating as the two key factors that people would look for. For our interactive techniques we wanted sliders to control the review count and average stars. Most importantly, we wanted to include a search feature so that specific businesses could be searched for a locations compared.**
   
   - An overview of your development process. Describe how the work was split among the team members. Include a commentary on the development process, including answers to the following questions: Roughly how much time did you spend developing your application (in people-hours)? What aspects took the most time?
+  
+  Because we needed to coordinate 4 people...
 
 Julian 6h for setting up base layer and coordinate translation.
 
